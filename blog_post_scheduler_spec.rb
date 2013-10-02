@@ -21,7 +21,8 @@ describe "Blog Post Scheduler" do
 
     # tl;dr - you call group_size in your test, it returns 4
     let (:group_size) { 4 } 
-    let (:students) { get_students } 
+    let (:students) { get_students }
+    let (:num_groups) { 20 }
 
     it "returns an array of groups" do
       create_groups(students, group_size, 20).class.should eq(Array)
@@ -32,7 +33,7 @@ describe "Blog Post Scheduler" do
     end
 
     it "creates the right number of groups" do
-      pending "implement a test that ensures you get the right number of groups returned"
+      create_groups(students, group_size, 20).size.should eq(num_groups)
     end
 
     it "uses every student in the list for a large enough number of groups" do
@@ -41,8 +42,8 @@ describe "Blog Post Scheduler" do
     end
 
     it "attempts to randomize the list" do
-      pending "implement a test that ensures that the list order returned is different from the student list"
-      #hint: look at the test: 'it uses every student in the list...'
+      groups = create_groups(students, group_size, 11)
+      groups.flatten.should_not eq(students)
     end
 
     it "uses some studens more than once for a large enough number of groups" do
