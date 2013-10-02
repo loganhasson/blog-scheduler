@@ -7,17 +7,28 @@ def create_groups(student_list, group_size, num_groups)
   random_list = student_list.shuffle
 
   while random_list.size > 0
-    mini_group = []
     mini_group = random_list.slice(0,group_size)
     random_list = random_list.drop(group_size)
     groups_array << mini_group
+  end
+
+  groups_array.collect do |group|
+    i = 0
+    while group.size < group_size
+      group << groups_array[i]
+      i += 1
+    end
   end
 
   i = 0
   while groups_array.size < num_groups
     extra_group = groups_array[i]
     groups_array << extra_group
-    i += 1
+    if i > groups_array.size - 1
+      i = 0
+    else
+      i += 1
+    end
   end
 
   groups_array
